@@ -19,7 +19,8 @@ class Graph:
 
     def add_edge(self, v1, v2):
         """
-        Add a directed edge to the graph.
+        Add a directed edge to the graph. Aka connect v1 to v2
+        which is one direction
         """
         self.vertices[v1].add(v2)
 
@@ -50,8 +51,8 @@ class Graph:
             ## if we haven't visited this node yet,
             if current_node not in visited:
                 ### mark as visited
-                visited.add(current_node)
                 print(current_node)
+                visited.add(current_node)
                 ### get its neighbors
                 neighbors = self.get_neighbors(current_node)
                 ### for each of the neighbors,
@@ -83,8 +84,8 @@ class Graph:
         if current_node not in visited:
             ### run function / print
             ### mark as visited
-            visited.add(current_node)
             print(current_node)
+            visited.add(current_node)
         ### get its neighbors
         neighbors = self.get_neighbors(current_node)
         ### for each of the neighbors
@@ -132,7 +133,7 @@ class Graph:
             current_path = q.dequeue()
             current_node = current_path[-1]
 
-            ### if this node is our targe node
+            ### if this node is our target node
             if current_node == destination_vertex:
                 #### return it!! return True
                 return current_path
@@ -222,7 +223,7 @@ class Graph:
 
                 #### if not, recurse with a path
                 result = self.dfs_recursive(
-                    neighbors, destination_vertex, path[neighbor], visted
+                    neighbors, destination_vertex, path + [neighbor], visted
                 )
                 ##### if this recursion returns a path,
                 if result is not None:

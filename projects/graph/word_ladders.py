@@ -6,8 +6,9 @@ import util from Queue
 
  # filtered_word_list = filter()
  # for word in word_list:
+myfile
 
-word_list = set()
+word_set = set()
 
 
 def get_neighbors(start_word):
