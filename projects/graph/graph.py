@@ -75,16 +75,16 @@ class Graph:
         visited = set()
 
         # while our stack isn't empty
-        while s.size():
+        while s.size() > 0:
 
             ## pop off whatever's on top, this is current_node
             current_node = s.pop()
+            print(current_node)
 
         ## if we haven't visited this vertex before
         if current_node not in visited:
             ### run function / print
             ### mark as visited
-            print(current_node)
             visited.add(current_node)
         ### get its neighbors
         neighbors = self.get_neighbors(current_node)
@@ -100,13 +100,13 @@ class Graph:
 
         This should be done using recursion.
         """
-        # mark this vertex as visted
+        # mark this vertex as visited
         visited.add(starting_vertex)
         print(starting_vertex)
         # for each neighbor
         neighbors = self.get_neighbors(starting_vertex)
         for neighbor in neighbors:
-            # if it's not visted
+            # if it's not visited
             if neighbor not in visited:
                 # recurse on the neighbor
                 self.dft_recursive(neighbor, visited)
@@ -119,13 +119,13 @@ class Graph:
         """
         # make a queue
         q = Queue()
-        # make a set to track nodes we've visted
-        visted = set()
+        # make a set to track nodes we've visited
 
         path = [starting_vertex]
 
         q.enqueue(path)
 
+        visited = set()
         # while queue isn't empty
         while q.size() > 0:
 
@@ -133,26 +133,27 @@ class Graph:
             current_path = q.dequeue()
             current_node = current_path[-1]
 
-            ### if this node is our target node
-            if current_node == destination_vertex:
-                #### return it!! return True
-                return current_path
-
-            ### if not visted
-            if current_node not in visted:
+            ### if not visited
+            if current_node not in visited:
+                ### if this node is our target node
+                if current_node == destination_vertex:
+                    #### return it!! return True
+                    return current_path
 
                 #### mark as visited
-                visted.add(current_node)
+                visited.add(current_node)
                 #### get its neighbors
                 neighbors = self.get_neighbors(current_node)
 
             #### for each neighbor
             for neighbor in neighbors:
+                path_copy = list(current_path)  # Copy the list
+                path_copy.append(neighbor)
+
                 #### add to our queue
-                # path_copy = current_path[:]
-                # path_copy.append(neighbor)
-                # q.enqueue(path_copy) or below
-                q.enqueue(current_path + [neighbor])
+                q.enqueue(path_copy)
+            # If we got here, we didn't find it
+        return None
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -162,13 +163,13 @@ class Graph:
         """
         # make a queue
         s = Stack()
-        # make a set to track nodes we've visted
-        visted = set()
+        # make a set to track nodes we've visited
 
         path = [starting_vertex]
 
         s.push(path)
 
+        visited = set()
         # while queue isn't empty
         while s.size() > 0:
 
@@ -176,28 +177,30 @@ class Graph:
             current_path = s.pop()
             current_node = current_path[-1]
 
-            ### if this node is our targe node
-            if current_node == destination_vertex:
-                #### return it!! return True
-                return current_path
-
-            ### if not visted
-            if current_node not in visted:
+            ### if not visited
+            if current_node not in visited:
+                ### if this node is our targe node
+                if current_node == destination_vertex:
+                    #### return it!! return True
+                    return current_path
 
                 #### mark as visited
-                visted.add(current_node)
+                visited.add(current_node)
                 #### get its neighbors
                 neighbors = self.get_neighbors(current_node)
 
             #### for each neighbor
             for neighbor in neighbors:
-                #### add to our queue
-                # path_copy = current_path[:]
-                # path_copy.append(neighbor)
+                path_copy = list(current_path)  # Copy the list
+                path_copy.append(neighbor)
                 # q.enqueue(path_copy) or below
-                s.push(current_path + [neighbor])
 
-    def dfs_recursive(self, vertex, destination_vertex, path=[], visted=set()):
+                #### add to our stack
+                s.push(path_copy)
+            # If we got here, we didn't find it
+        return None
+
+    def dfs_recursive(self, vertex, destination_vertex, path=[], visited=set()):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -205,8 +208,10 @@ class Graph:
 
         This should be done using recursion.
         """
-        ## mark our node as visted
-        visted.add(vertex)
+
+        ## mark our node as visited
+        visited.add(vertex)
+        print(vertex)
 
         ## check if it's our target node, if so return
         if vertex == destination_vertex:
@@ -219,11 +224,11 @@ class Graph:
         neighbors = self.get_neighbors(vertex)
         ### check if visited
         for neighbor in neighbors:
-            if neighbor not in visted:
+            if neighbor not in visited:
 
                 #### if not, recurse with a path
                 result = self.dfs_recursive(
-                    neighbors, destination_vertex, path + [neighbor], visted
+                    neighbors, destination_vertex, path + [neighbor], visited
                 )
                 ##### if this recursion returns a path,
                 if result is not None:
