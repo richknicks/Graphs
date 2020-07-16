@@ -79,19 +79,19 @@ class Graph:
 
             ## pop off whatever's on top, this is current_node
             current_node = s.pop()
-            print(current_node)
 
-        ## if we haven't visited this vertex before
-        if current_node not in visited:
-            ### run function / print
-            ### mark as visited
-            visited.add(current_node)
-        ### get its neighbors
-        neighbors = self.get_neighbors(current_node)
-        ### for each of the neighbors
-        for neighbor in neighbors:
-            #### add to our stack
-            s.push(neighbor)
+            ## if we haven't visited this vertex before
+            if current_node not in visited:
+                ### run function / print
+                print(current_node)
+                ### mark as visited
+                visited.add(current_node)
+                ### get its neighbors
+                neighbors = self.get_neighbors(current_node)
+                ### for each of the neighbors
+                for neighbor in neighbors:
+                    #### add to our stack
+                    s.push(neighbor)
 
     def dft_recursive(self, starting_vertex, visited=set()):
         """
@@ -209,30 +209,31 @@ class Graph:
         This should be done using recursion.
         """
 
-        ## mark our node as visited
-        visited.add(vertex)
-        print(vertex)
+        # mark as visited
 
-        ## check if it's our target node, if so return
+        visited.add(vertex)
+
+        # check if it is our target node, if so return
         if vertex == destination_vertex:
             return path
 
         if len(path) == 0:
             path.append(vertex)
 
-        ## iterate over neighbors
+        # iterate over neighbors
         neighbors = self.get_neighbors(vertex)
-        ### check if visited
+
+        # check if visited
         for neighbor in neighbors:
             if neighbor not in visited:
 
-                #### if not, recurse with a path
+                # if not recurse with a path
                 result = self.dfs_recursive(
-                    neighbors, destination_vertex, path + [neighbor], visited
+                    neighbor, destination_vertex, path + [neighbor], visited
                 )
-                ##### if this recursion returns a path,
+                # if this recursion returns a path
                 if result is not None:
-                    ###### return from here
+                    # return from here
                     return result
 
 

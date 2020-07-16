@@ -20,7 +20,7 @@ class Queue:
 
 word_set = set()
 # Read all words from file and add them to the set
-with open("words.txt") as f:
+with open("projects/graph/words.txt") as f:
     for line in f:
         word = line.strip()  # remove new lines
         word_set.add(word)
